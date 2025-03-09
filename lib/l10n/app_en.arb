@@ -1,3 +1,16 @@
 {
-  "loginTitle": "Login Your Acnt"
+  "loginTitle": "Login Your Account",
+  "loginSubTitle": "to explore the world exclusive",
+  "mail" : "mail",
+  "password" : "password",
+  "login" : "login",
+  "mailValidation" : "invalid email",
+  "passwordValidation" : "invalid password",
+  "register" : "Need an account ? ",
+  "registerButton" : "Sign Up",
+  "loginHint" : "Already have an account ? ",
+  "fullName" : "Full Name",
+  "registerTitle": "Register Your Account",
+  "registerSubTitle": "to explore the world exclusive",
+  "registerButton" : "Register"
 }

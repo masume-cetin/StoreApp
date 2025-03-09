@@ -1,3 +1,16 @@
 {
-  "loginTitle": "Hesabına Giriş Yap"
+  "loginTitle": "Hesabına Giriş Yap",
+  "loginSubTitle": "seçkin kataloglarda gezinmek için",
+  "mail" : "mail",
+  "password" : "şifre",
+  "login" : "giriş",
+  "mailValidation" : "geçersiz email",
+  "passwordValidation" : "geçersiz şifre",
+    "register" : "Hesabınız yok mu ? ",
+    "registerButton" : "Kayıt ol",
+      "loginHint" : "Zaten bir hesabınız var mı ? ",
+      "fullName" : "İsim Soyisim",
+      "registerTitle": "Kayıt Ol",
+      "registerSubTitle": "seçkin kataloglarda gezinmek için",
+      "registerButton" : "Kayıt Ol"
 }

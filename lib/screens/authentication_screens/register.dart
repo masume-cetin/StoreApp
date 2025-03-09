@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:store_app/screens/authentication_screens/register.dart';
 import 'package:store_app/utils/theme.dart';
 
 import '../../generated/app_localizations.dart';
@@ -9,18 +8,20 @@ import '../../utils/validations.dart';
 import '../widgets/gradientButton.dart';
 import '../widgets/gradientTopContainer.dart';
 import '../widgets/textFields.dart';
+import 'login.dart';
 
-class Login extends BasePage {
-  const Login({super.key});
+class Register extends BasePage {
+  const Register({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginState extends BaseState<Login> {
+class _RegisterState extends BaseState<Register> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _fullNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,6 @@ class _LoginState extends BaseState<Login> {
               children: [
                 // CustomPaint widget to draw the upside-down semicircle
                 const GradientTopContainer(),
-                // C
                 // Bottom part of the screen (below the semicircle) with its own color
                 Positioned.fill(
                   top: kIsWeb
@@ -47,10 +47,9 @@ class _LoginState extends BaseState<Login> {
                         topLeft: Radius.circular(30.0),
                         topRight: Radius.circular(30.0),
                       ),
-                    ), // for the bottom part of the screen
+                    ),
                   ),
                 ),
-
                 // Your existing content on top of the semicircle
                 Center(
                   child: Padding(
@@ -68,19 +67,29 @@ class _LoginState extends BaseState<Login> {
                                   color: Colors.white),
                             ),
                           ),
-
-                          /* Text(
-                        AppLocalizations.of(context)!.loginTitle,
-                        style: headlineTextStyle,
-                      ),
-                      Text(AppLocalizations.of(context)!.loginSubTitle,
-                          style: buttonTextStyle),*/
-                          // TODO: maybe ımage here
-                          SizedBox(height: height / 20),
                           SizedBox(
                             width: kIsWeb ? width / 2 : width,
                             child: Column(
                               children: [
+                                SizedBox(height: height / 15),
+                                Padding(
+                                  padding: loginFormFieldTitlePadding,
+                                  child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                        AppLocalizations.of(context)!.fullName,
+                                        style: bodyTextStyle),
+                                  ),
+                                ),
+                                Padding(
+                                    padding: loginFormFieldPadding,
+                                    child: genericTextField(
+                                      controller: _fullNameController,
+                                      textInputType: TextInputType.text,
+                                      validation: nameValidation,
+                                      labelText: "john doe",
+                                      icon: const Icon(Icons.account_circle),
+                                    )),
                                 Padding(
                                   padding: loginFormFieldTitlePadding,
                                   child: Align(
@@ -91,15 +100,14 @@ class _LoginState extends BaseState<Login> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: loginFormFieldPadding,
-                                  child: genericTextField(
-                                    controller: _emailController,
-                                    textInputType: TextInputType.emailAddress,
-                                    validation: mailValidation,
-                                    labelText: "xxxxxxx@abc.com",
-                                    icon: const Icon(Icons.email),
-                                  ),
-                                ),
+                                    padding: loginFormFieldPadding,
+                                    child: genericTextField(
+                                      controller: _emailController,
+                                      textInputType: TextInputType.emailAddress,
+                                      validation: mailValidation,
+                                      labelText: "xxxxxxx@abc.com",
+                                      icon: const Icon(Icons.email),
+                                    )),
                                 Padding(
                                   padding: loginFormFieldTitlePadding,
                                   child: Align(
@@ -110,23 +118,22 @@ class _LoginState extends BaseState<Login> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: loginFormFieldPadding,
-                                  child: genericTextField(
-                                    controller: _passwordController,
-                                    textInputType:
-                                        TextInputType.visiblePassword,
-                                    validation: passwordValidation,
-                                    labelText: "********",
-                                    isObscureText: true,
-                                    icon: const Icon(Icons.lock),
-                                  ),
-                                ),
+                                    padding: loginFormFieldPadding,
+                                    child: genericTextField(
+                                      controller: _passwordController,
+                                      textInputType:
+                                          TextInputType.visiblePassword,
+                                      validation: passwordValidation,
+                                      labelText: "********",
+                                      isObscureText: true,
+                                      icon: const Icon(Icons.lock),
+                                    )),
                                 Padding(
                                   padding: loginButtonPadding,
                                   child: GradientButton(
-                                    text: 'Login',
+                                    text: AppLocalizations.of(context)!
+                                        .registerButton,
                                     onPressed: () {
-                                      // Handle button press (e.g., navigate to another screen)
                                       _formKey.currentState?.validate();
                                     },
                                   ),
@@ -144,19 +151,19 @@ class _LoginState extends BaseState<Login> {
                                       children: [
                                         Text(
                                             AppLocalizations.of(context)!
-                                                .register,
+                                                .loginHint,
                                             style: bodyTextStyle),
                                         GestureDetector(
                                           onTap: () {
                                             Navigator.pushReplacement(context,
                                                 MaterialPageRoute(
                                                     builder: (context) {
-                                              return const Register();
+                                              return const Login();
                                             }));
                                           },
                                           child: Text(
                                               AppLocalizations.of(context)!
-                                                  .registerButton,
+                                                  .login,
                                               style: bodyTextStyle.copyWith(
                                                   color: Colors.amber,
                                                   fontWeight: FontWeight.w900)),
@@ -167,7 +174,7 @@ class _LoginState extends BaseState<Login> {
                                 )
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),

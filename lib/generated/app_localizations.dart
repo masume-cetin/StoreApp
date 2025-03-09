@@ -100,6 +100,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Login Your Account'**
   String get loginTitle;
+
+  /// No description provided for @loginSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'to explore the world exclusive'**
+  String get loginSubTitle;
+
+  /// No description provided for @mail.
+  ///
+  /// In en, this message translates to:
+  /// **'mail'**
+  String get mail;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'password'**
+  String get password;
+
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'login'**
+  String get login;
+
+  /// No description provided for @mailValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'invalid email'**
+  String get mailValidation;
+
+  /// No description provided for @passwordValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'invalid password'**
+  String get passwordValidation;
+
+  /// No description provided for @register.
+  ///
+  /// In en, this message translates to:
+  /// **'Need an account ? '**
+  String get register;
+
+  /// No description provided for @registerButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get registerButton;
+
+  /// No description provided for @loginHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account ? '**
+  String get loginHint;
+
+  /// No description provided for @fullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get fullName;
+
+  /// No description provided for @registerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Register Your Account'**
+  String get registerTitle;
+
+  /// No description provided for @registerSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'to explore the world exclusive'**
+  String get registerSubTitle;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -11,7 +11,7 @@ import '../widgets/textFields.dart';
 import 'login.dart';
 
 class Register extends BasePage {
-  const Register({Key? key}) : super(key: key);
+  const Register({super.key});
 
   @override
   State<Register> createState() => _RegisterState();
@@ -83,7 +83,7 @@ class _RegisterState extends BaseState<Register> {
                                 ),
                                 Padding(
                                     padding: loginFormFieldPadding,
-                                    child: genericTextField(
+                                    child: GenericTextField(
                                       controller: _fullNameController,
                                       textInputType: TextInputType.text,
                                       validation: nameValidation,
@@ -101,7 +101,7 @@ class _RegisterState extends BaseState<Register> {
                                 ),
                                 Padding(
                                     padding: loginFormFieldPadding,
-                                    child: genericTextField(
+                                    child: GenericTextField(
                                       controller: _emailController,
                                       textInputType: TextInputType.emailAddress,
                                       validation: mailValidation,
@@ -119,7 +119,7 @@ class _RegisterState extends BaseState<Register> {
                                 ),
                                 Padding(
                                     padding: loginFormFieldPadding,
-                                    child: genericTextField(
+                                    child: GenericTextField(
                                       controller: _passwordController,
                                       textInputType:
                                           TextInputType.visiblePassword,

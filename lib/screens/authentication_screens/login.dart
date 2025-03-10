@@ -92,7 +92,7 @@ class _LoginState extends BaseState<Login> {
                                 ),
                                 Padding(
                                   padding: loginFormFieldPadding,
-                                  child: genericTextField(
+                                  child: GenericTextField(
                                     controller: _emailController,
                                     textInputType: TextInputType.emailAddress,
                                     validation: mailValidation,
@@ -111,7 +111,7 @@ class _LoginState extends BaseState<Login> {
                                 ),
                                 Padding(
                                   padding: loginFormFieldPadding,
-                                  child: genericTextField(
+                                  child: GenericTextField(
                                     controller: _passwordController,
                                     textInputType:
                                         TextInputType.visiblePassword,

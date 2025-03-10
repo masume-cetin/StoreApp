@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class genericTextField extends StatefulWidget {
+class GenericTextField extends StatefulWidget {
   TextEditingController controller = TextEditingController();
   String? Function(String?, BuildContext) validation;
   String? labelText;
   Icon? icon;
   TextInputType textInputType;
   bool? isObscureText;
-  genericTextField(
+  GenericTextField(
       {super.key,
       required this.controller,
       required this.validation,
@@ -16,10 +16,10 @@ class genericTextField extends StatefulWidget {
       required this.textInputType,
       this.isObscureText});
   @override
-  _genericTextFieldState createState() => _genericTextFieldState();
+  _GenericTextFieldState createState() => _GenericTextFieldState();
 }
 
-class _genericTextFieldState extends State<genericTextField> {
+class _GenericTextFieldState extends State<GenericTextField> {
   // Create a controller for the TextField
 
   final labelText = "";

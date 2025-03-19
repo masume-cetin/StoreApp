@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import '../models/generic/resultModel.dart';
 
 abstract class BasePage extends StatefulWidget {
   const BasePage({Key? key}) : super(key: key);
@@ -7,6 +12,7 @@ abstract class BasePage extends StatefulWidget {
 abstract class BaseState<T extends BasePage> extends State<T> {
   double width = 0.0;
   double height = 0.0;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -48,5 +54,33 @@ abstract class BaseState<T extends BasePage> extends State<T> {
         child: CircularProgressIndicator(),
       ),
     );
+  }
+
+  handleResponse(http.Response response) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // Successful response, we can stop loading if it's in a loading state
+      isLoading = false;
+    } else {
+      // Handle errors by parsing the response body into the Result model
+      final result = Result.fromJson(json.decode(response.body));
+
+      // Check if the response contains validation errors
+      if (result.validation != null) {
+        // If validation errors exist, show them in a snackbar
+        showErrorSnackBar(context, result.validation?.message);
+      } else {
+        // If no validation errors, show a general error message
+        showErrorSnackBar(
+            context,
+            result.errorMessage.isNotEmpty
+                ? result.errorMessage
+                : "An error occurred");
+      }
+    }
+  }
+
+  showErrorSnackBar(BuildContext context, String? msg) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(msg ?? "")));
   }
 }

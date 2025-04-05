@@ -41,9 +41,11 @@ class ApiService {
           body: json.encode(body),
           headers: <String, String>{
             "Content-Type": "application/json; charset=UTF-8",
-            'Access-Control-Allow-Origin': 'http://192.168.1.100:3000'
+            'Access-Control-Allow-Origin': '*'
           },
         );
+          print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
       } else if (method == 'PUT') {
         response = await http.put(
           url,
@@ -63,7 +65,7 @@ class ApiService {
       return json.decode(response.body);
     } catch (e) {
       // Handle error
-      return {'error': 'Something went wrong'};
+      return {'error': e};
     }
   }
 }

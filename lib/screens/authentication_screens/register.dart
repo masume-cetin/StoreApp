@@ -42,10 +42,12 @@ class _RegisterState extends BaseState<Register> {
     // Call the sendRequest function with necessary parameters
     var response =
         await service.sendRequest(signUp, method: 'POST', body: requestBody);
-    User user = User.fromJson(response);
-    setState(() {
-      if (user.result!.isSuccess) isLoading = false; // Stop loading
-    });
+    if (response['user'] != null) {
+      User user = User.fromJson(response['user']);
+      setState(() {
+        if (user.result!.isSuccess) isLoading = false; // Stop loading
+      });
+    }
   }
 
   @override

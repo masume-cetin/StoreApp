@@ -1,2 +1,2 @@
-String uri = "http://192.168.1.104:3000";
+String uri = "http://172.20.10.8:3000";
 String signUp = "/api/signup";

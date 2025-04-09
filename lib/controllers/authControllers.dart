@@ -4,30 +4,20 @@ import 'package:http/http.dart' as http;
 import 'package:store_app/models/authModels/userModel.dart';
 
 import '../utils/globalVariables.dart';
-
-class AuthController {
-  Future<void> signUpUsers(
-      {required context,
-      required String email,
-      required String password,
-      required String fullName}) async {
-    try {
-      User user = User(email: email, password: password, fullName: fullName);
-      http.Response response = await http.post(Uri.parse('$uri/api/signup'),
-          body: user.toJson(), //convert the user object to request body
-          headers: <String, String>{
-            //setting the headers for request
-            "Content-Type":
-                "application/json: charset=UTF-8" //specify the content type as json
-          });
-    } catch (e) {}
-  }
-}
-
 class ApiService {
-  // final String baseUrl;
+  ApiService._internal();
 
-  //ApiService({this.baseUrl = 'https://yourapi.com'});
+  static final ApiService _instance = ApiService._internal();
+
+  factory ApiService() {
+    return _instance;
+  }
+
+  // Store last HTTP response
+  http.Response? _lastResponse;
+
+  // Getter for last response
+  http.Response? get lastResponse => _lastResponse;
 
   Future<Map<String, dynamic>> sendRequest(String endpoint,
       {String method = 'GET', Map<String, dynamic>? body}) async {
@@ -61,11 +51,17 @@ class ApiService {
       } else {
         response = await http.get(url);
       }
-
+      _lastResponse = response;
       return json.decode(response.body);
     } catch (e) {
       // Handle error
       return {'error': e};
     }
+  }
+  dynamic get lastJson {
+    if (_lastResponse != null && _lastResponse!.statusCode == 200) {
+      return json.decode(_lastResponse!.body);
+    }
+    return null;
   }
 }

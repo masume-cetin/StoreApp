@@ -46,6 +46,7 @@ class _RegisterState extends BaseState<Register> {
       User user = User.fromJson(response['user']);
       setState(() {
         if (user.result!.isSuccess) isLoading = false; // Stop loading
+
       });
     }
   }

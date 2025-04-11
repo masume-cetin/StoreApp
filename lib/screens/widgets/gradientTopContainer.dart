@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../utils/theme.dart';
+
 class GradientTopContainer extends StatelessWidget {
   const GradientTopContainer({
     Key? key,
@@ -7,24 +9,22 @@ class GradientTopContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned.fill(
-      top: 0,
-      child: Container(
-        decoration: const BoxDecoration(
+    return Container(
+        height: MediaQuery.of(context).size.height/17,
+        decoration:const BoxDecoration(
           borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(30.0),
-            bottomRight: Radius.circular(30.0),
+            bottomLeft: Radius.circular(0.0),
+            bottomRight: Radius.circular(0.0),
           ),
           gradient: LinearGradient(
             colors: [
-              Colors.amberAccent,
-              Colors.amber,
+              secondaryColor,
+              primaryColor,
             ], // Gradient colors for the top area
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
           ),
         ),
-      ),
-    );
+      );
   }
 }

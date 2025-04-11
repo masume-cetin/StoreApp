@@ -1,13 +1,22 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_app/models/generic/resultModel.dart';
 import 'package:store_app/screens/authentication_screens/register.dart';
+import 'package:store_app/screens/mainScreen.dart';
+import 'package:store_app/screens/widgets/baseContainerWidget.dart';
 import 'package:store_app/utils/theme.dart';
 
+import '../../controllers/authControllers.dart';
+import '../../cubits/genericCubit.dart';
+import '../../cubits/states/genericStates.dart';
 import '../../generated/app_localizations.dart';
+import '../../models/authModels/userModel.dart';
+import '../../models/generic/apiResponseWrapper.dart';
 import '../../utils/basePage.dart';
+import '../../utils/globalVariables.dart';
 import '../../utils/validations.dart';
 import '../widgets/gradientButton.dart';
-import '../widgets/gradientTopContainer.dart';
 import '../widgets/textFields.dart';
 
 class Login extends BasePage {
@@ -21,162 +30,166 @@ class _LoginState extends BaseState<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final ApiService service = ApiService();
+  final userCubit = ApiCubit<User?>();
+
+  Future<ApiResponse<User>> signInRequest() async {
+    final requestBody = User(
+      email: _emailController.text,
+      password: _passwordController.text,
+    ).toJson();
+
+    final response = await service.sendRequest(signIn, method: 'POST', body: requestBody);
+
+    if (response['token'] != null) {
+      print("📦 Raw signup response: $response");
+
+      try {
+        final user = User.fromJson(response);
+        print("✅ User parsed: $user");
+
+        final result = Result.fromJson(response['result'] ?? {});
+        return ApiResponse(data: user, result: result);
+      } catch (e) {
+        print("❌ Failed to parse User: $e");
+        rethrow;
+      }
+    }
+    final result = Result.fromJson(response);
+    return ApiResponse(data: null, result: result);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          return SingleChildScrollView(
-            child: Stack(
-              children: [
-                // CustomPaint widget to draw the upside-down semicircle
-                const GradientTopContainer(),
-                // C
-                // Bottom part of the screen (below the semicircle) with its own color
-                Positioned.fill(
-                  top: kIsWeb
-                      ? height / 2 - 150
-                      : height / 2 -
-                          200, // Position the bottom section after the circle
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30.0),
-                        topRight: Radius.circular(30.0),
+      body: PageWrapper(
+        centerContent: true,
+        child: BlocBuilder<ApiCubit<ApiResponse<User>>, ApiState<ApiResponse<User>>>(
+            builder: (context, state)
+        {
+          if (state is ApiLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is ApiSuccess<ApiResponse<User>>) {
+            var response = state.data.result;
+            if (handleResponse(response)) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MainScreen()),
+                );
+              });
+            }
+          } else if (state is ApiError) {
+            return Center(child: Text("Error: ${state.toString()}"));
+          }
+          return Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 600),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: loginCompanyTitlePadding,
+                      child: Text(
+                        "Company",
+                        style: headlineTextStyle.copyWith(color: Colors.white),
                       ),
-                    ), // for the bottom part of the screen
-                  ),
-                ),
-
-                // Your existing content on top of the semicircle
-                Center(
-                  child: Padding(
-                    padding: pageContentPadding,
-                    child: Form(
-                      key: _formKey,
+                    ),
+                    SizedBox(height: height / 20),
+                    SizedBox(
+                      width: kIsWeb ? width / 2 : width,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          // mail title
                           Padding(
-                            padding: loginCompanyTitlePadding,
-                            child: Text(
-                              "Company",
-                              style: headlineTextStyle.copyWith(
-                                  color: Colors.white),
+                            padding: loginFormFieldTitlePadding,
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(AppLocalizations.of(context)!.mail, style: bodyTextStyle),
                             ),
                           ),
-
-                          /* Text(
-                        AppLocalizations.of(context)!.loginTitle,
-                        style: headlineTextStyle,
-                      ),
-                      Text(AppLocalizations.of(context)!.loginSubTitle,
-                          style: buttonTextStyle),*/
-                          // TODO: maybe ımage here
-                          SizedBox(height: height / 20),
-                          SizedBox(
-                            width: kIsWeb ? width / 2 : width,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: loginFormFieldTitlePadding,
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                        AppLocalizations.of(context)!.mail,
-                                        style: bodyTextStyle),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: loginFormFieldPadding,
-                                  child: GenericTextField(
-                                    controller: _emailController,
-                                    textInputType: TextInputType.emailAddress,
-                                    validation: mailValidation,
-                                    labelText: "xxxxxxx@abc.com",
-                                    icon: const Icon(Icons.email),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: loginFormFieldTitlePadding,
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                        AppLocalizations.of(context)!.password,
-                                        style: bodyTextStyle),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: loginFormFieldPadding,
-                                  child: GenericTextField(
-                                    controller: _passwordController,
-                                    textInputType:
-                                        TextInputType.visiblePassword,
-                                    validation: passwordValidation,
-                                    labelText: "********",
-                                    isObscureText: true,
-                                    icon: const Icon(Icons.lock),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: loginButtonPadding,
-                                  child: GradientButton(
-                                    text: 'Login',
-                                    onPressed: () {
-                                      // Handle button press (e.g., navigate to another screen)
-                                      _formKey.currentState?.validate();
+                          // mail field
+                          Padding(
+                            padding: loginFormFieldPadding,
+                            child: GenericTextField(
+                              controller: _emailController,
+                              textInputType: TextInputType.emailAddress,
+                              validation: mailValidation,
+                              labelText: "xxxxxxx@abc.com",
+                              icon: const Icon(Icons.email),
+                            ),
+                          ),
+                          // password title
+                          Padding(
+                            padding: loginFormFieldTitlePadding,
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(AppLocalizations.of(context)!.password, style: bodyTextStyle),
+                            ),
+                          ),
+                          // password field
+                          Padding(
+                            padding: loginFormFieldPadding,
+                            child: GenericTextField(
+                              controller: _passwordController,
+                              textInputType: TextInputType.visiblePassword,
+                              validation: passwordValidation,
+                              labelText: "********",
+                              isObscureText: true,
+                              icon: const Icon(Icons.lock),
+                            ),
+                          ),
+                          // login button
+                          Padding(
+                            padding: loginButtonPadding,
+                            child: GradientButton(
+                              text: 'Login',
+                              onPressed: () {
+                                if (_formKey.currentState?.validate() ?? false) {
+                                  final cubit = context.read<ApiCubit<ApiResponse<User>>>();
+                                  cubit.request(() async => await signInRequest());
+                                }
+                              },
+                            ),
+                          ),
+                          // register row
+                          Align(
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding: loginFormFieldPadding.copyWith(top: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(AppLocalizations.of(context)!.register, style: bodyTextStyle),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => const Register()),
+                                      );
                                     },
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Padding(
-                                    padding:
-                                        loginFormFieldPadding.copyWith(top: 20),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                            AppLocalizations.of(context)!
-                                                .register,
-                                            style: bodyTextStyle),
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.pushReplacement(context,
-                                                MaterialPageRoute(
-                                                    builder: (context) {
-                                              return const Register();
-                                            }));
-                                          },
-                                          child: Text(
-                                              AppLocalizations.of(context)!
-                                                  .registerButton,
-                                              style: bodyTextStyle.copyWith(
-                                                  color: Colors.amber,
-                                                  fontWeight: FontWeight.w900)),
-                                        ),
-                                      ],
+                                    child: Text(
+                                      AppLocalizations.of(context)!.registerButton,
+                                      style: outlinedFormTitleTextStyle.copyWith(
+                                        fontWeight: FontWeight.w900,
+                                      ),
                                     ),
                                   ),
-                                )
-                              ],
+                                ],
+                              ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           );
-        },
+        }),
       ),
     );
   }

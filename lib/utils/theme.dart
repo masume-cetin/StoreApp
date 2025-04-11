@@ -1,57 +1,105 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// Define custom colors
-const Color primaryColor = Color(0xFF00BFAE); // Example primary color
-const Color secondaryColor = Color(0xFF03DAC6); // Example secondary color
-const Color appBarColor = Color(0xFF1F1F1F); // Dark color for AppBar
+// Define a soft, neutral color palette
+const Color primaryColor = Color(0xFFC0C0C0); // Classic silver
+const Color secondaryColor = Color(0xFFF8F9FA); // Soft white/off-white
+const Color appBarColor = Color(0xFFFDFDFD); // Clean white for app bar
+const Color textColorPrimary = Color(0xFF3C3C3C); // Sleek dark gray
+const Color textColorSecondary = Color(0xFF8A8A8A); // Cool silver-gray
+const Color borderColor = Color(0xFFB0B0B0); // Metallic border tone
 
 // Define custom text styles using Google Fonts
 final TextStyle headlineTextStyle = GoogleFonts.poppins(
   fontSize: 32,
   fontWeight: FontWeight.bold,
-  color: Colors.black,
+  color: textColorPrimary,
+  shadows: [
+    Shadow(
+      offset: Offset(1.5, 1.5), // X and Y offset
+      blurRadius: 2.0,
+      color: Colors.black.withOpacity(0.3),
+    ),
+  ],
 );
 
+final TextStyle outlinedFormTitleTextStyle = GoogleFonts.roboto(
+  fontSize: 18,
+  fontWeight: FontWeight.bold,
+  color: secondaryColor,
+  shadows: [
+    Shadow(
+      offset: Offset(1.5, 1.5), // X and Y offset
+      blurRadius: 2.0,
+      color: Colors.black.withOpacity(0.3),
+    ),
+  ],
+);
 final TextStyle bodyTextStyle = GoogleFonts.roboto(
   fontSize: 16,
   fontWeight: FontWeight.normal,
-  color: Colors.black87,
+  color: textColorPrimary,
 );
 
 final TextStyle buttonTextStyle = GoogleFonts.lato(
   fontSize: 16,
   fontWeight: FontWeight.w600,
-  color: Colors.black,
+  color: textColorPrimary,
 );
 
 // Paddings
-
-const EdgeInsets loginCompanyTitlePadding = EdgeInsets.only(bottom: 80);
+const EdgeInsets loginCompanyTitlePadding = EdgeInsets.only(top: 30);
 const EdgeInsets loginCompanyTitlePaddingWeb = EdgeInsets.only(bottom: 120);
 const EdgeInsets pageContentPadding = EdgeInsets.only(top: 100);
 const EdgeInsets loginFormFieldPadding =
-    EdgeInsets.symmetric(horizontal: 20, vertical: 10);
+EdgeInsets.symmetric(horizontal: 20, vertical: 10);
 const EdgeInsets loginFormFieldTitlePadding =
-    EdgeInsets.symmetric(horizontal: 20);
+EdgeInsets.symmetric(horizontal: 20);
 const EdgeInsets loginButtonPadding =
-    EdgeInsets.only(top: 30, right: 20, left: 20);
+EdgeInsets.only(top: 30, right: 20, left: 20);
 
-// Create the main ThemeData object using Google Fonts
+// Create the main ThemeData object
 ThemeData buildAppTheme() {
   return ThemeData(
     primaryColor: primaryColor,
-    hintColor: secondaryColor,
+    scaffoldBackgroundColor: Colors.white,
+    canvasColor: secondaryColor,
+    cardColor: Colors.white,
+    hintColor: textColorSecondary,
     brightness: Brightness.light,
 
-    // TextTheme for headings, body text, etc.
     textTheme: TextTheme(
-      headlineLarge: headlineTextStyle, // Headlines
-      bodyMedium: bodyTextStyle, // Body text
-      labelMedium: buttonTextStyle, // Buttons
+      headlineLarge: GoogleFonts.poppins(
+        fontSize: 32,
+        fontWeight: FontWeight.bold,
+        color: textColorPrimary,
+      ),
+      bodyMedium: GoogleFonts.roboto(
+        fontSize: 16,
+        fontWeight: FontWeight.normal,
+        color: textColorPrimary,
+      ),
+      labelMedium: GoogleFonts.lato(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: textColorPrimary,
+      ),
     ),
 
-    // Button theme
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: secondaryColor,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: borderColor),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: primaryColor),
+      ),
+      hintStyle: TextStyle(color: textColorSecondary),
+    ),
+
     buttonTheme: ButtonThemeData(
       buttonColor: primaryColor,
       shape: RoundedRectangleBorder(
@@ -59,26 +107,24 @@ ThemeData buildAppTheme() {
       ),
     ),
 
-    // AppBar theme customization
     appBarTheme: AppBarTheme(
       color: appBarColor,
-      elevation: 0,
+      elevation: 1,
+      shadowColor: borderColor.withOpacity(0.4),
+      iconTheme: const IconThemeData(color: textColorPrimary),
       titleTextStyle: GoogleFonts.poppins(
         fontSize: 22,
         fontWeight: FontWeight.bold,
-        color: Colors.white,
+        color: textColorPrimary,
       ),
     ),
 
-    // Scaffold background color
-    scaffoldBackgroundColor: Colors.white,
-
-    // Floating action button theme
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: primaryColor,
+      foregroundColor: Colors.white,
     ),
 
-    // Visual density for better UI scaling
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
+
 }

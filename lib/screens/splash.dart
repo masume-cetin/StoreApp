@@ -32,7 +32,7 @@ class _GradientSplashScreenState extends State<GradientSplashScreen> {
         // Set the gradient background
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.amber, Colors.amberAccent], // Gradient colors
+            colors: [secondaryColor, primaryColor], // Gradient colors
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

@@ -3,14 +3,16 @@ import '../generic/resultModel.dart';
 class User {
   final String? id;
   final String email;
-  final String password;
+  final String? password;
   final String? fullName;
   final String? state;
   final String? city;
   final String? locality;
   final Result? result;
+  final String? token;
 
   User({
+    this.token,
     this.id,
     required this.email,
     required this.password,
@@ -23,6 +25,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
+      token: json['token']?? '',
       id: json['_id']?? '',
       email: json['email']?? '',
       password: json['password']?? '',
@@ -36,6 +39,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     return {
+      'token' : token,
       'email': email,
       '_id': id,
       'password': password,

@@ -5,6 +5,7 @@ import 'package:store_app/utils/theme.dart';
 
 import 'cubits/genericCubit.dart';
 import 'cubits/navigationBarCubit.dart';
+import 'cubits/searchBarCubit.dart';
 import 'generated/app_localizations.dart';
 import 'models/authModels/userModel.dart';
 import 'models/generic/apiResponseWrapper.dart';
@@ -19,6 +20,7 @@ void main() {
         BlocProvider<NavigationCubit>(
           create: (_) => NavigationCubit(),
         ),
+        BlocProvider(create: (_) => SearchCubit()),
       ],
       child: const MyApp(),
     ),

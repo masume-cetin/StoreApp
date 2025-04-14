@@ -66,6 +66,9 @@ class _RegisterState extends BaseState<Register> {
     return BlocProvider<ApiCubit<ApiResponse<User>>>.value(
       value: userCubit,
       child: PageWrapper(
+        showAppBarActions: false,
+        showSearchBar: false,
+        showAppBarMenu: false,
         showSideImage: true,
         showBottomNavigationBar: false,
           centerContent: true,

@@ -61,6 +61,9 @@ class _LoginState extends BaseState<Login> {
   @override
   Widget build(BuildContext context) {
     return PageWrapper(
+      showAppBarActions: false,
+      showSearchBar: false,
+      showAppBarMenu: false,
       showSideImage: true,
       showBottomNavigationBar: false,
         centerContent: true,

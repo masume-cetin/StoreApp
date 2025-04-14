@@ -25,6 +25,9 @@ class TabShell extends StatelessWidget {
     final index = context.watch<NavigationCubit>().state;
 
     return PageWrapper(
+      showAppBarActions: true,
+      showSearchBar: true,
+      showAppBarMenu: true,
       showSideImage: false,
       showBottomNavigationBar: true,
       centerContent: false,

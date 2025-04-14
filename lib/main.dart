@@ -4,16 +4,24 @@ import 'package:store_app/screens/splash.dart';
 import 'package:store_app/utils/theme.dart';
 
 import 'cubits/genericCubit.dart';
+import 'cubits/navigationBarCubit.dart';
 import 'generated/app_localizations.dart';
 import 'models/authModels/userModel.dart';
 import 'models/generic/apiResponseWrapper.dart';
 
 void main() {
   runApp(
-      BlocProvider<ApiCubit<ApiResponse<User>>>( // ✅ this is correct
-        create: (_) => ApiCubit<ApiResponse<User>>(),
-        child: const MyApp(),
-      )
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<ApiCubit<ApiResponse<User>>>(
+          create: (_) => ApiCubit<ApiResponse<User>>(),
+        ),
+        BlocProvider<NavigationCubit>(
+          create: (_) => NavigationCubit(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
   );
 }
 

@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/models/generic/resultModel.dart';
 import 'package:store_app/screens/authentication_screens/register.dart';
-import 'package:store_app/screens/mainScreen.dart';
-import 'package:store_app/screens/widgets/baseContainerWidget.dart';
+import 'package:store_app/screens/widgets/pageWrapperWidget.dart';
 import 'package:store_app/utils/theme.dart';
-
 import '../../controllers/authControllers.dart';
 import '../../cubits/genericCubit.dart';
 import '../../cubits/states/genericStates.dart';
@@ -16,6 +14,7 @@ import '../../models/generic/apiResponseWrapper.dart';
 import '../../utils/basePage.dart';
 import '../../utils/globalVariables.dart';
 import '../../utils/validations.dart';
+import '../tab_screens/tabNavShellPage.dart';
 import '../widgets/gradientButton.dart';
 import '../widgets/textFields.dart';
 
@@ -61,8 +60,9 @@ class _LoginState extends BaseState<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageWrapper(
+    return PageWrapper(
+      showSideImage: true,
+      showBottomNavigationBar: false,
         centerContent: true,
         child: BlocBuilder<ApiCubit<ApiResponse<User>>, ApiState<ApiResponse<User>>>(
             builder: (context, state)
@@ -75,7 +75,7 @@ class _LoginState extends BaseState<Login> {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const MainScreen()),
+                  MaterialPageRoute(builder: (context) => const NavigationShell()),
                 );
               });
             }
@@ -190,7 +190,6 @@ class _LoginState extends BaseState<Login> {
             ),
           );
         }),
-      ),
-    );
+      );
   }
 }

@@ -8,7 +8,11 @@ const Color appBarColor = Color(0xFFFDFDFD); // Clean white for app bar
 const Color textColorPrimary = Color(0xFF3C3C3C); // Sleek dark gray
 const Color textColorSecondary = Color(0xFF8A8A8A); // Cool silver-gray
 const Color borderColor = Color(0xFFB0B0B0); // Metallic border tone
-
+extension OpacityColor on Color {
+  Color customOpacity(double opacity) {
+    return withAlpha((opacity * 255).toInt());
+  }
+}
 // Define custom text styles using Google Fonts
 final TextStyle headlineTextStyle = GoogleFonts.poppins(
   fontSize: 32,
@@ -126,5 +130,6 @@ ThemeData buildAppTheme() {
 
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
+
 
 }

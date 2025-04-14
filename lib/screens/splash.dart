@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/theme.dart';
@@ -43,9 +44,19 @@ class _GradientSplashScreenState extends State<GradientSplashScreen> {
             children: [
               //TODO : maybe a logo here
               // Optional Text under the logo
-              Text(
-                'Company',
-                style: headlineTextStyle.copyWith(color: Colors.white),
+              Container(
+                width: kIsWeb ? 400 : 200,
+                height: kIsWeb ? 400 : 200,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 30),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child:  Image.asset(
+                      'assets/images/brandLogo.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

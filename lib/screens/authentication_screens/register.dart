@@ -13,8 +13,8 @@ import '../../models/generic/resultModel.dart';
 import '../../utils/basePage.dart';
 import '../../utils/globalVariables.dart';
 import '../../utils/validations.dart';
-import '../mainScreen.dart';
-import '../widgets/baseContainerWidget.dart';
+import '../tab_screens/mainScreen.dart';
+import '../widgets/pageWrapperWidget.dart';
 import '../widgets/gradientButton.dart';
 import '../widgets/textFields.dart';
 import 'login.dart';
@@ -65,8 +65,9 @@ class _RegisterState extends BaseState<Register> {
   Widget build(BuildContext context) {
     return BlocProvider<ApiCubit<ApiResponse<User>>>.value(
       value: userCubit,
-      child: Scaffold(
-        body: PageWrapper(
+      child: PageWrapper(
+        showSideImage: true,
+        showBottomNavigationBar: false,
           centerContent: true,
           footer: const Text(
             "© 2025 My App",
@@ -226,7 +227,6 @@ class _RegisterState extends BaseState<Register> {
             },
           ),
         ),
-      ),
     );
   }
 }

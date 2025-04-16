@@ -22,7 +22,7 @@ final TextStyle headlineTextStyle = GoogleFonts.poppins(
     Shadow(
       offset: Offset(1.5, 1.5), // X and Y offset
       blurRadius: 2.0,
-      color: Colors.black.withOpacity(0.3),
+      color: Colors.black.customOpacity(0.3),
     ),
   ],
 );
@@ -35,7 +35,7 @@ final TextStyle outlinedFormTitleTextStyle = GoogleFonts.roboto(
     Shadow(
       offset: Offset(1.5, 1.5), // X and Y offset
       blurRadius: 2.0,
-      color: Colors.black.withOpacity(0.3),
+      color: Colors.black.customOpacity(0.3),
     ),
   ],
 );
@@ -114,7 +114,7 @@ ThemeData buildAppTheme() {
     appBarTheme: AppBarTheme(
       color: appBarColor,
       elevation: 1,
-      shadowColor: borderColor.withOpacity(0.4),
+      shadowColor: borderColor.customOpacity(0.4),
       iconTheme: const IconThemeData(color: textColorPrimary),
       titleTextStyle: GoogleFonts.poppins(
         fontSize: 22,

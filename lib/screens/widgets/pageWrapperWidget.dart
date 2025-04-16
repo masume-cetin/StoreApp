@@ -41,7 +41,7 @@ class PageWrapper extends StatelessWidget {
       backgroundColor: Colors.transparent,
       bottomNavigationBar: showBottomNavigationBar ? const BottomNavigationBarWidget() : null,
       appBar: AppBar(
-        backgroundColor: Colors.white.withOpacity(0.9),
+        backgroundColor: Colors.white.customOpacity(0.9),
         elevation: 0,
         automaticallyImplyLeading: false,
         title: showSearchBar ? SearchBarTextField(onCameraTap: () {

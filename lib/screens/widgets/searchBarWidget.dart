@@ -20,7 +20,7 @@ class SearchBarTextField extends StatelessWidget {
           hintText: 'Search...',
           hintStyle: const TextStyle(color: Colors.grey),
           filled: true,
-          fillColor: Colors.white.withOpacity(0.7),
+          fillColor: Colors.white.customOpacity(0.7),
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
           prefixIcon: const Icon(Icons.search, color: textColorPrimary),
 

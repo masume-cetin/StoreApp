@@ -1,11 +1,13 @@
-name: Flutter CI
+name: Flutter Android CI
 
 on:
+  push:
+    branches: [ dev ]
   pull_request:
     branches: [ main, dev ]
 
 jobs:
-  build:
+  build-android:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Analyze project (fail on errors only)
+      - name: Analyze project (errors only)
         run: |
           flutter analyze > analyze_output.txt
           cat analyze_output.txt
@@ -30,8 +32,8 @@ jobs:
             echo "✅ No errors found. Continuing..."
           fi
 
-      - name: Skip tests for now
-        run: echo "🧪 Skipping tests until more functionality is implemented."
+      - name: Accept Android Licenses
+        run: yes | sdkmanager --licenses
 
       - name: Build Android APK
         run: flutter build apk --release

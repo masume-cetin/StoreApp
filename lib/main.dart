@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/screens/splash.dart';
 import 'package:store_app/utils/theme.dart';
 
-import 'cubits/genericCubit.dart';
-import 'cubits/navigationBarCubit.dart';
-import 'cubits/searchBarCubit.dart';
+import 'cubits/generic_cubit.dart';
+import 'cubits/navigation_bar_cubit.dart';
+import 'cubits/search_bar_cubit.dart';
 import 'generated/app_localizations.dart';
-import 'models/authModels/userModel.dart';
+import 'models/authModels/user_model.dart';
 import 'models/generic/api_response_wrapper.dart';
 
 void main() {

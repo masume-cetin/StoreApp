@@ -1,22 +1,22 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app/models/generic/resultModel.dart';
-import 'package:store_app/screens/authentication_screens/register.dart';
-import 'package:store_app/screens/widgets/pageWrapperWidget.dart';
+import 'package:store_app/models/generic/result_model.dart';
+import 'package:store_app/screens/authentication_screens/register_page.dart';
+import 'package:store_app/screens/widgets/page_wrapper_widget.dart';
 import 'package:store_app/utils/theme.dart';
-import '../../controllers/authControllers.dart';
-import '../../cubits/genericCubit.dart';
-import '../../cubits/states/genericStates.dart';
+import '../../controllers/api_service.dart';
+import '../../cubits/generic_cubit.dart';
+import '../../cubits/states/generic_states.dart';
 import '../../generated/app_localizations.dart';
-import '../../models/authModels/userModel.dart';
+import '../../models/authModels/user_model.dart';
 import '../../models/generic/api_response_wrapper.dart';
-import '../../utils/basePage.dart';
-import '../../utils/globalVariables.dart';
+import '../../utils/base_page.dart';
+import '../../utils/global_variables.dart';
 import '../../utils/validations.dart';
-import '../tab_screens/tabNavShellPage.dart';
-import '../widgets/gradientButton.dart';
-import '../widgets/textFields.dart';
+import '../tab_screens/tab_nav_shell_page.dart';
+import '../widgets/gradient_button.dart';
+import '../widgets/text_fields.dart';
 
 class Login extends BasePage {
   const Login({super.key});
@@ -41,16 +41,16 @@ class _LoginState extends BaseState<Login> {
     final response = await service.sendRequest(signIn, method: 'POST', body: requestBody);
 
     if (response['token'] != null) {
-      print("📦 Raw signup response: $response");
+      debugPrint("📦 Raw signup response: $response");
 
       try {
         final user = User.fromJson(response);
-        print("✅ User parsed: $user");
+        debugPrint("✅ User parsed: $user");
 
         final result = Result.fromJson(response['result'] ?? {});
         return ApiResponse(data: user, result: result);
       } catch (e) {
-        print("❌ Failed to parse User: $e");
+        debugPrint("❌ Failed to parse User: $e");
         rethrow;
       }
     }

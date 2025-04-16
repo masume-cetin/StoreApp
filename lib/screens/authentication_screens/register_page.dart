@@ -1,23 +1,22 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app/models/authModels/userModel.dart';
+import 'package:store_app/models/authModels/user_model.dart';
 import 'package:store_app/utils/theme.dart';
 
-import '../../controllers/authControllers.dart';
-import '../../cubits/genericCubit.dart';
-import '../../cubits/states/genericStates.dart';
+import '../../controllers/api_service.dart';
+import '../../cubits/generic_cubit.dart';
+import '../../cubits/states/generic_states.dart';
 import '../../generated/app_localizations.dart';
 import '../../models/generic/api_response_wrapper.dart';
-import '../../models/generic/resultModel.dart';
-import '../../utils/basePage.dart';
-import '../../utils/globalVariables.dart';
+import '../../models/generic/result_model.dart';
+import '../../utils/base_page.dart';
+import '../../utils/global_variables.dart';
 import '../../utils/validations.dart';
-import '../tab_screens/mainScreen.dart';
-import '../widgets/pageWrapperWidget.dart';
-import '../widgets/gradientButton.dart';
-import '../widgets/textFields.dart';
-import 'login.dart';
+import '../widgets/page_wrapper_widget.dart';
+import '../widgets/gradient_button.dart';
+import '../widgets/text_fields.dart';
+import 'login_page.dart';
 
 class Register extends BasePage {
   const Register({super.key});
@@ -44,16 +43,16 @@ class _RegisterState extends BaseState<Register> {
     var response =
     await service.sendRequest(signUp, method: 'POST', body: requestBody);
     if (response['token'] != null) {
-      print("📦 Raw signup response: $response");
+      debugPrint("📦 Raw signup response: $response");
 
       try {
         final user = User.fromJson(response);
-        print("✅ User parsed: $user");
+        debugPrint("✅ User parsed: $user");
 
         final result = Result.fromJson(response['result'] ?? {});
         return ApiResponse(data: user, result: result);
       } catch (e) {
-        print("❌ Failed to parse User: $e");
+        debugPrint("❌ Failed to parse User: $e");
         rethrow;
       }
     }
@@ -91,7 +90,6 @@ class _RegisterState extends BaseState<Register> {
                     });
                   }
               } else if (state is ApiError) {
-                print(state);
                 return Center(child: Text("Error: ${state.toString()}"));
               }
 

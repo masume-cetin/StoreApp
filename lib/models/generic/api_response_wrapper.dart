@@ -1,4 +1,4 @@
-import 'package:store_app/models/generic/resultModel.dart';
+import 'package:store_app/models/generic/result_model.dart';
 
 class ApiResponse<T> {
   final T? data;

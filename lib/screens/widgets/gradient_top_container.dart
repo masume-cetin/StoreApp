@@ -4,8 +4,8 @@ import '../../utils/theme.dart';
 
 class GradientTopContainer extends StatelessWidget {
   const GradientTopContainer({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

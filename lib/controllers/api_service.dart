@@ -1,9 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:store_app/models/authModels/userModel.dart';
 
-import '../utils/globalVariables.dart';
+import '../utils/global_variables.dart';
 class ApiService {
   ApiService._internal();
 
@@ -34,8 +34,8 @@ class ApiService {
             'Access-Control-Allow-Origin': '*'
           },
         );
-          print('Response status: ${response.statusCode}');
-        print('Response body: ${response.body}');
+          debugPrint('Response status: ${response.statusCode}');
+        debugPrint('Response body: ${response.body}');
       } else if (method == 'PUT') {
         response = await http.put(
           url,

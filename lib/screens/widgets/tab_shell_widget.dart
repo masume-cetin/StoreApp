@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app/screens/widgets/pageWrapperWidget.dart';
+import 'package:store_app/screens/widgets/page_wrapper_widget.dart';
 
-import '../../cubits/navigationBarCubit.dart';
-import '../tab_screens/accountScreen.dart';
-import '../tab_screens/cartScreen.dart';
-import '../tab_screens/favoritesScreen.dart';
-import '../tab_screens/mainScreen.dart';
-import '../tab_screens/storesScreen.dart';
+import '../../cubits/navigation_bar_cubit.dart';
+import '../tab_screens/account_page.dart';
+import '../tab_screens/cart_page.dart';
+import '../tab_screens/favorites_page.dart';
+import '../tab_screens/home_page.dart';
+import '../tab_screens/stores_page.dart';
 
 class TabShell extends StatelessWidget {
   const TabShell({super.key});

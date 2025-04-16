@@ -1,4 +1,4 @@
-import 'package:store_app/models/generic/validationModel.dart';
+import 'package:store_app/models/generic/validation_model.dart';
 
 class Result {
   final bool isSuccess;

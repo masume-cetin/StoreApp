@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../cubits/navigationBarCubit.dart';
+import '../../cubits/navigation_bar_cubit.dart';
 import '../../utils/theme.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {

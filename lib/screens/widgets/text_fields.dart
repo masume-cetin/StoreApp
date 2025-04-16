@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class GenericTextField extends StatefulWidget {
-  TextEditingController controller = TextEditingController();
-  String? Function(String?, BuildContext) validation;
-  String? labelText;
-  Icon? icon;
-  TextInputType textInputType;
-  bool? isObscureText;
-  GenericTextField(
+  final TextEditingController controller ;
+  final String? Function(String?, BuildContext) validation;
+  final String? labelText;
+  final Icon? icon;
+  final TextInputType textInputType;
+  final bool? isObscureText;
+  const GenericTextField(
       {super.key,
       required this.controller,
       required this.validation,
@@ -16,20 +16,21 @@ class GenericTextField extends StatefulWidget {
       required this.textInputType,
       this.isObscureText});
   @override
-  _GenericTextFieldState createState() => _GenericTextFieldState();
+  GenericTextFieldState createState() => GenericTextFieldState();
+
 }
 
-class _GenericTextFieldState extends State<GenericTextField> {
+class GenericTextFieldState extends State<GenericTextField> {
   // Create a controller for the TextField
 
   final labelText = "";
 
   @override
-  /*void dispose() {
+  void dispose() {
     // Dispose of the controller when the widget is removed
     widget.controller.dispose();
     super.dispose();
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {

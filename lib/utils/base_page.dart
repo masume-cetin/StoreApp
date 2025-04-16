@@ -1,13 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:http/http.dart' as http;
 
-import '../models/generic/resultModel.dart';
+import '../models/generic/result_model.dart';
 
 abstract class BasePage extends StatefulWidget {
-  const BasePage({Key? key}) : super(key: key);
+  const BasePage({super.key});
 }
 
 abstract class BaseState<T extends BasePage> extends State<T> {

@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:store_app/screens/widgets/searchBarWidget.dart';
+import 'package:store_app/screens/widgets/search_bar_widget.dart';
 import 'package:store_app/utils/theme.dart';
-import 'bottomNavigationBar.dart';
-import 'draweMenu.dart';
+import 'bottom_navigation_bar.dart';
+import 'drawer_menu.dart';
 
 class PageWrapper extends StatelessWidget {
   final Widget child;
@@ -33,7 +33,7 @@ class PageWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    final bool isWeb = kIsWeb;
+    const bool isWeb = kIsWeb;
     final bool isSmallScreen = screenSize.width < 800;
 
     return Scaffold(

@@ -1,4 +1,4 @@
-import '../generic/resultModel.dart';
+import '../generic/result_model.dart';
 
 class User {
   final String? id;

@@ -20,7 +20,7 @@ final TextStyle headlineTextStyle = GoogleFonts.poppins(
   color: textColorPrimary,
   shadows: [
     Shadow(
-      offset: Offset(1.5, 1.5), // X and Y offset
+      offset: const Offset(1.5, 1.5), // X and Y offset
       blurRadius: 2.0,
       color: Colors.black.customOpacity(0.3),
     ),
@@ -33,7 +33,7 @@ final TextStyle outlinedFormTitleTextStyle = GoogleFonts.roboto(
   color: secondaryColor,
   shadows: [
     Shadow(
-      offset: Offset(1.5, 1.5), // X and Y offset
+      offset: const Offset(1.5, 1.5), // X and Y offset
       blurRadius: 2.0,
       color: Colors.black.customOpacity(0.3),
     ),
@@ -95,13 +95,13 @@ ThemeData buildAppTheme() {
       fillColor: secondaryColor,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: borderColor),
+        borderSide: const BorderSide(color: borderColor),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: primaryColor),
+        borderSide: const BorderSide(color: primaryColor),
       ),
-      hintStyle: TextStyle(color: textColorSecondary),
+      hintStyle: const TextStyle(color: textColorSecondary),
     ),
 
     buttonTheme: ButtonThemeData(

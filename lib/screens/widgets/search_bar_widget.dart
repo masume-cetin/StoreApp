@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/utils/theme.dart';
 
-import '../../cubits/searchBarCubit.dart';
+import '../../cubits/search_bar_cubit.dart';
 
 class SearchBarTextField extends StatelessWidget {
   final VoidCallback? onCameraTap;

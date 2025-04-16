@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app/cubits/states/genericStates.dart';
+import 'package:store_app/cubits/states/generic_states.dart';
 
 class ApiCubit<T> extends Cubit<ApiState<T>> {
   ApiCubit() : super(ApiInitial());

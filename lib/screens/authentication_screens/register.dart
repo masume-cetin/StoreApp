@@ -8,7 +8,7 @@ import '../../controllers/authControllers.dart';
 import '../../cubits/genericCubit.dart';
 import '../../cubits/states/genericStates.dart';
 import '../../generated/app_localizations.dart';
-import '../../models/generic/ApiResponseWrapper.dart';
+import '../../models/generic/api_response_wrapper.dart';
 import '../../models/generic/resultModel.dart';
 import '../../utils/basePage.dart';
 import '../../utils/globalVariables.dart';

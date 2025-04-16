@@ -10,7 +10,7 @@ import '../../cubits/genericCubit.dart';
 import '../../cubits/states/genericStates.dart';
 import '../../generated/app_localizations.dart';
 import '../../models/authModels/userModel.dart';
-import '../../models/generic/apiResponseWrapper.dart';
+import '../../models/generic/api_response_wrapper.dart';
 import '../../utils/basePage.dart';
 import '../../utils/globalVariables.dart';
 import '../../utils/validations.dart';

@@ -32,9 +32,6 @@ jobs:
             echo "✅ No errors found. Continuing..."
           fi
 
-      - name: Accept Android Licenses
-        run: yes | sdkmanager --licenses
-
       - name: Build Android APK
         run: flutter build apk --release
 

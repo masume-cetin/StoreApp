@@ -1,0 +1,2 @@
+/Users/masumecetin/Documents/GitHub/StoreApp/android/app/.cxx/Debug/66435jxl/x86/CMakeFiles/edit_cache.dir
+/Users/masumecetin/Documents/GitHub/StoreApp/android/app/.cxx/Debug/66435jxl/x86/CMakeFiles/rebuild_cache.dir

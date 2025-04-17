@@ -1,9 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/theme.dart';
-import 'authentication_screens/login.dart';
+import 'authentication_screens/login_page.dart';
 
 class GradientSplashScreen extends StatefulWidget {
   const GradientSplashScreen({super.key});
@@ -17,7 +18,7 @@ class _GradientSplashScreenState extends State<GradientSplashScreen> {
   void initState() {
     super.initState();
     // Navigate to the next screen after 3 seconds (you can change the duration)
-    Timer(Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const Login()),
@@ -32,7 +33,7 @@ class _GradientSplashScreenState extends State<GradientSplashScreen> {
         // Set the gradient background
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.amber, Colors.amberAccent], // Gradient colors
+            colors: [secondaryColor, primaryColor], // Gradient colors
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -43,9 +44,19 @@ class _GradientSplashScreenState extends State<GradientSplashScreen> {
             children: [
               //TODO : maybe a logo here
               // Optional Text under the logo
-              Text(
-                'Company',
-                style: headlineTextStyle.copyWith(color: Colors.white),
+              SizedBox(
+                width: kIsWeb ? 400 : 200,
+                height: kIsWeb ? 400 : 200,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 30),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child:  Image.asset(
+                      'assets/images/brandLogo.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

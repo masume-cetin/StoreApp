@@ -1,0 +1,2 @@
+/Users/masumecetin/Documents/GitHub/StoreApp/android/app/.cxx/Debug/66435jxl/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/masumecetin/Documents/GitHub/StoreApp/android/app/.cxx/Debug/66435jxl/armeabi-v7a/CMakeFiles/rebuild_cache.dir

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:store_app/screens/splash.dart';
 import 'package:store_app/utils/theme.dart';
 
@@ -9,20 +10,39 @@ import 'cubits/search_bar_cubit.dart';
 import 'generated/app_localizations.dart';
 import 'models/authModels/user_model.dart';
 import 'models/generic/api_response_wrapper.dart';
+import 'models/resourceModels/resource_bundle_model.dart';
+import 'models/resourceModels/resource_item_model.dart';
+import 'providers/resource_bundle_provider.dart'; // You'll need to create this file if not yet
 
-void main() {
+void main() async {
+  //WidgetsFlutterBinding.ensureInitialized();
+
+  final resourceProvider = ResourceBundleProvider();
+  //await resourceProvider.loadAllResources();
+
   runApp(
-    MultiBlocProvider(
+    MultiProvider(
       providers: [
-        BlocProvider<ApiCubit<ApiResponse<User>>>(
-          create: (_) => ApiCubit<ApiResponse<User>>(),
-        ),
-        BlocProvider<NavigationCubit>(
-          create: (_) => NavigationCubit(),
-        ),
-        BlocProvider(create: (_) => SearchCubit()),
+        ChangeNotifierProvider(create: (_) => resourceProvider),
       ],
-      child: const MyApp(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<ApiCubit<ApiResponse<ResourceItem>>>(
+            create: (_) => ApiCubit<ApiResponse<ResourceItem>>(),
+          ),
+          BlocProvider<ApiCubit<ApiResponse<List<ResourceItem>>>>(
+            create: (_) => ApiCubit<ApiResponse<List<ResourceItem>>>(),
+          ),
+          BlocProvider<ApiCubit<ApiResponse<User>>>(
+            create: (_) => ApiCubit<ApiResponse<User>>(),
+          ),
+          BlocProvider<NavigationCubit>(
+            create: (_) => NavigationCubit(),
+          ),
+          BlocProvider(create: (_) => SearchCubit()),
+        ],
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -30,7 +50,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

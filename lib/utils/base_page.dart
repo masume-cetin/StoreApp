@@ -58,7 +58,7 @@ abstract class BaseState<T extends BasePage> extends State<T> {
       final result = response;
       if (result?.validation != null) {
         showErrorSnackBar(context, result?.validation?.message);
-      } else if(result?.errorMessage != null) {
+      } else if(result?.errorMessage != null ) {
         showErrorSnackBar(
             context,
              result?.errorMessage

@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app/models/generic/result_model.dart';
 import 'package:store_app/screens/authentication_screens/register_page.dart';
 import 'package:store_app/screens/widgets/page_wrapper_widget.dart';
 import 'package:store_app/utils/theme.dart';
@@ -11,6 +10,7 @@ import '../../cubits/states/generic_states.dart';
 import '../../generated/app_localizations.dart';
 import '../../models/authModels/user_model.dart';
 import '../../models/generic/api_response_wrapper.dart';
+import '../../providers/resource_bundle_provider.dart';
 import '../../utils/base_page.dart';
 import '../../utils/global_variables.dart';
 import '../../utils/validations.dart';
@@ -31,6 +31,15 @@ class _LoginState extends BaseState<Login> {
   final TextEditingController _passwordController = TextEditingController();
   final ApiService service = ApiService();
   final userCubit = ApiCubit<User?>();
+  late Uint8List? bytes;
+
+  @override
+  initState(){
+    final provider = context.read<ResourceBundleProvider>();
+    final item = provider.getItemByName("authPageIllustration");
+    bytes = item?.decodedImage;
+    super.initState();
+  }
 
   Future<ApiResponse<User>> signInRequest() async {
     final requestBody = User(
@@ -40,23 +49,27 @@ class _LoginState extends BaseState<Login> {
 
     final response = await service.sendRequest(signIn, method: 'POST', body: requestBody);
 
-    if (response['token'] != null) {
-      debugPrint("📦 Raw signup response: $response");
+    debugPrint("📦 Raw login response: $response");
 
-      try {
-        final user = User.fromJson(response);
-        debugPrint("✅ User parsed: $user");
+    try {
+      final apiResponse = ApiResponse<User>.fromJson(
+        response,
+            (json) => User.fromJson(json),
+      );
 
-        final result = Result.fromJson(response['result'] ?? {});
-        return ApiResponse(data: user, result: result);
-      } catch (e) {
-        debugPrint("❌ Failed to parse User: $e");
-        rethrow;
+      if (apiResponse.data != null) {
+        debugPrint("✅ User parsed: ${apiResponse.data}");
+      } else {
+        debugPrint("❌ No user data returned.");
       }
+
+      return apiResponse;
+    } catch (e) {
+      debugPrint("❌ Failed to parse User: $e");
+      rethrow;
     }
-    final result = Result.fromJson(response);
-    return ApiResponse(data: null, result: result);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +79,7 @@ class _LoginState extends BaseState<Login> {
       showAppBarMenu: false,
       showSideImage: true,
       showBottomNavigationBar: false,
+      sideImageBytes: bytes,
         centerContent: true,
         child: BlocBuilder<ApiCubit<ApiResponse<User>>, ApiState<ApiResponse<User>>>(
             builder: (context, state)

@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' show Uint8List, kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:store_app/screens/widgets/search_bar_widget.dart';
 import 'package:store_app/utils/theme.dart';
@@ -15,6 +15,7 @@ class PageWrapper extends StatelessWidget {
   final bool showBottomNavigationBar;
   final bool showSearchBar;
   final bool showAppBarActions;
+  final Uint8List? sideImageBytes;
 
 
   const PageWrapper({
@@ -27,6 +28,7 @@ class PageWrapper extends StatelessWidget {
     required this.showBottomNavigationBar,
     required this.showSearchBar,
     required this.showAppBarActions,
+    this.sideImageBytes,
     this.contentPadding = const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
   });
 
@@ -35,7 +37,6 @@ class PageWrapper extends StatelessWidget {
     final Size screenSize = MediaQuery.of(context).size;
     const bool isWeb = kIsWeb;
     final bool isSmallScreen = screenSize.width < 800;
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.transparent,
@@ -123,12 +124,11 @@ class PageWrapper extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child: Image.asset(
-                              'assets/images/clothingBrandIllustration.png',
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
+                        child: sideImageBytes != null
+                            ? Image.memory(sideImageBytes!, fit: BoxFit.cover)
+                            : Image.asset('assets/images/clothingBrandIllustration.png', fit: BoxFit.cover),
+                      ),
+        ),
                       ),
                     ),
                 Expanded(

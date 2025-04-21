@@ -8,7 +8,6 @@ class ApiSuccess<T> extends ApiState<T> {
   final T data;
   ApiSuccess(this.data);
 }
-
 class ApiError<T> extends ApiState<T> {
   final String message;
   ApiError(this.message);

@@ -20,8 +20,8 @@ class ApiService {
   http.Response? get lastResponse => _lastResponse;
 
   Future<Map<String, dynamic>> sendRequest(String endpoint,
-      {String method = 'GET', Map<String, dynamic>? body}) async {
-    final url = Uri.parse('$uri$endpoint');
+      {String method = 'GET', Map<String, dynamic>? body,Map<String, dynamic>? queryParams,}) async {
+    final url = Uri.parse('$uri$endpoint').replace(queryParameters: queryParams);
     http.Response response;
 
     try {
@@ -49,7 +49,10 @@ class ApiService {
           headers: {'Content-Type': 'application/json'},
         );
       } else {
-        response = await http.get(url);
+        response = await http.get(
+          url,
+          headers: {"Content-Type": "application/json; charset=UTF-8"},
+        );
       }
       _lastResponse = response;
       return json.decode(response.body);

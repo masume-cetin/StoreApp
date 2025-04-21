@@ -2,13 +2,13 @@ import 'package:store_app/models/generic/validation_model.dart';
 
 class Result {
   final bool isSuccess;
-  final String errorMessage;
+  final String? errorMessage;
   final int status;
   final Validation? validation;
 
   Result({
     required this.isSuccess,
-    required this.errorMessage,
+    this.errorMessage,
     required this.status,
     this.validation,
   });
@@ -16,7 +16,7 @@ class Result {
   factory Result.fromJson(Map<String, dynamic> json) {
     return Result(
       isSuccess: json['isSuccess'],
-      errorMessage: json['errorMessage'] ?? "",
+      errorMessage: json['errorMessage'] ,
       status: json['status'],
       validation: json['validation'] != null
           ? Validation.fromJson(json['validation'])

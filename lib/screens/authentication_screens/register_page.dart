@@ -9,7 +9,7 @@ import '../../cubits/generic_cubit.dart';
 import '../../cubits/states/generic_states.dart';
 import '../../generated/app_localizations.dart';
 import '../../models/generic/api_response_wrapper.dart';
-import '../../models/generic/result_model.dart';
+import '../../providers/resource_bundle_provider.dart';
 import '../../utils/base_page.dart';
 import '../../utils/global_variables.dart';
 import '../../utils/validations.dart';
@@ -32,33 +32,45 @@ class _RegisterState extends BaseState<Register> {
   final TextEditingController _fullNameController = TextEditingController();
   final ApiService service = ApiService();
   final userCubit = ApiCubit<ApiResponse<User>>();
+  late Uint8List? bytes;
+
+  @override
+  initState(){
+    final provider = context.read<ResourceBundleProvider>();
+    final item = provider.getItemByName("authPageIllustration");
+    bytes = item?.decodedImage;
+    super.initState();
+  }
 
   Future<ApiResponse<User>> signUpRequest() async {
-    var requestBody = User(
+    final requestBody = User(
       email: _emailController.text,
       password: _passwordController.text,
       fullName: _fullNameController.text,
     ).toJson();
 
-    var response =
-    await service.sendRequest(signUp, method: 'POST', body: requestBody);
-    if (response['token'] != null) {
-      debugPrint("📦 Raw signup response: $response");
+    final response = await service.sendRequest(signUp, method: 'POST', body: requestBody);
+    debugPrint("📦 Raw signup response: $response");
 
-      try {
-        final user = User.fromJson(response);
-        debugPrint("✅ User parsed: $user");
+    try {
+      final apiResponse = ApiResponse<User>.fromJson(
+        response,
+            (json) => User.fromJson(json),
+      );
 
-        final result = Result.fromJson(response['result'] ?? {});
-        return ApiResponse(data: user, result: result);
-      } catch (e) {
-        debugPrint("❌ Failed to parse User: $e");
-        rethrow;
+      if (apiResponse.data != null) {
+        debugPrint("✅ User parsed: ${apiResponse.data}");
+      } else {
+        debugPrint("❌ No user data returned.");
       }
+
+      return apiResponse;
+    } catch (e) {
+      debugPrint("❌ Failed to parse User: $e");
+      rethrow;
     }
-    final result = Result.fromJson(response);
-    return ApiResponse(data: null, result: result);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +82,7 @@ class _RegisterState extends BaseState<Register> {
         showAppBarMenu: false,
         showSideImage: true,
         showBottomNavigationBar: false,
+        sideImageBytes: bytes,
           centerContent: true,
           footer: const Text(
             "© 2025 My App",

@@ -10,16 +10,11 @@ import 'cubits/search_bar_cubit.dart';
 import 'generated/app_localizations.dart';
 import 'models/authModels/user_model.dart';
 import 'models/generic/api_response_wrapper.dart';
-import 'models/resourceModels/resource_bundle_model.dart';
 import 'models/resourceModels/resource_item_model.dart';
 import 'providers/resource_bundle_provider.dart'; // You'll need to create this file if not yet
 
 void main() async {
-  //WidgetsFlutterBinding.ensureInitialized();
-
   final resourceProvider = ResourceBundleProvider();
-  //await resourceProvider.loadAllResources();
-
   runApp(
     MultiProvider(
       providers: [

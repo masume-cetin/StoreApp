@@ -8,7 +8,6 @@ class User {
   final String? state;
   final String? city;
   final String? locality;
-  final Result? result;
   final String? token;
 
   User({
@@ -20,7 +19,6 @@ class User {
     this.state,
     this.city,
     this.locality,
-    this.result,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -33,7 +31,6 @@ class User {
       state: json['state']?? '',
       city: json['city']?? '',
       locality: json['locality']?? '',
-      result: json['result'] != null ? Result.fromJson(json['result']) : null,
     );
   }
 
@@ -47,7 +44,6 @@ class User {
       'state': state,
       'city': city,
       'locality': locality,
-      'result': result?.toJson(),
     };
   }
 }

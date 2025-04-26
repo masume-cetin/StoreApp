@@ -1,5 +1,3 @@
-import '../generic/result_model.dart';
-
 class User {
   final String? id;
   final String email;

@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:store_app/screens/splash.dart';
 import 'package:store_app/utils/theme.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart'; // auto-generated
 import 'cubits/generic_cubit.dart';
 import 'cubits/navigation_bar_cubit.dart';
 import 'cubits/search_bar_cubit.dart';
@@ -14,6 +15,10 @@ import 'models/resourceModels/resource_item_model.dart';
 import 'providers/resource_bundle_provider.dart'; // You'll need to create this file if not yet
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   final resourceProvider = ResourceBundleProvider();
   runApp(
     MultiProvider(

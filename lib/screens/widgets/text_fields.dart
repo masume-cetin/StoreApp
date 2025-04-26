@@ -26,13 +26,6 @@ class GenericTextFieldState extends State<GenericTextField> {
   final labelText = "";
 
   @override
-  void dispose() {
-    // Dispose of the controller when the widget is removed
-    widget.controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,

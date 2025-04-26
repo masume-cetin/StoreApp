@@ -1,14 +1,19 @@
+import 'dart:io' as platform;
+
+import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:store_app/models/authModels/user_model.dart';
 import 'package:store_app/utils/theme.dart';
-
 import '../../controllers/api_service.dart';
 import '../../cubits/generic_cubit.dart';
 import '../../cubits/states/generic_states.dart';
 import '../../generated/app_localizations.dart';
 import '../../models/generic/api_response_wrapper.dart';
+import '../../models/generic/result_model.dart';
 import '../../providers/resource_bundle_provider.dart';
 import '../../utils/base_page.dart';
 import '../../utils/global_variables.dart';
@@ -41,7 +46,14 @@ class _RegisterState extends BaseState<Register> {
     bytes = item?.decodedImage;
     super.initState();
   }
-
+  @override
+  void dispose() {
+    // Dispose of the controller when the widget is removed
+    _passwordController.dispose();
+    _emailController.dispose();
+    _fullNameController.dispose();
+    super.dispose();
+  }
   Future<ApiResponse<User>> signUpRequest() async {
     final requestBody = User(
       email: _emailController.text,
@@ -68,6 +80,60 @@ class _RegisterState extends BaseState<Register> {
     } catch (e) {
       debugPrint("❌ Failed to parse User: $e");
       rethrow;
+    }
+  }
+  Future<ApiResponse<User>> registerWithGoogle() async {
+    try {
+      final googleSignIn = GoogleSignIn(
+        clientId: kIsWeb
+            ? dotenv.env['FIREBASE_WEB_API_KEY']  // ← use the correct one here
+            : platform.Platform.isIOS? dotenv.env['FIREBASE_IOS_API_KEY']:
+        dotenv.env['FIREBASE_ANDROID_API_KEY'],
+      );
+
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      if (googleUser == null) {
+        return ApiResponse<User>(
+          result: Result(isSuccess: false, errorMessage: "Google sign-in cancelled",status: 500),
+          data: null,
+        );
+      }
+
+      final googleAuth = await googleUser.authentication;
+      final credential = fb_auth.GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final userCred = await fb_auth.FirebaseAuth.instance.signInWithCredential(credential);
+      final idToken = await userCred.user?.getIdToken();
+
+      if (idToken != null) {
+        final response = await service.sendRequest(
+          "/api/google-auth",
+          method: 'POST',
+          body: {
+            "firebaseIdToken": idToken,
+          },
+        );
+
+        final apiResponse = ApiResponse<User>.fromJson(
+          response,
+              (json) => User.fromJson(json),
+        );
+
+        return apiResponse;
+      } else {
+        return ApiResponse<User>(
+          result: Result(isSuccess: false, errorMessage: "Firebase token was null", status: 500),
+          data: null,
+        );
+      }
+    } catch (e) {
+      return ApiResponse<User>(
+        result: Result(isSuccess: false, errorMessage: e.toString(),status: 500),
+        data: null,
+      );
     }
   }
 
@@ -199,6 +265,17 @@ class _RegisterState extends BaseState<Register> {
                                         () => signUpRequest(),
                                   );
                                 }
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: loginButtonPadding,
+                            child: GradientButton(
+                              text: "Register With Google Account",
+                              onPressed: () {
+                                  context.read<ApiCubit<ApiResponse<User>>>().request(
+                                        () => registerWithGoogle(),
+                                  );
                               },
                             ),
                           ),

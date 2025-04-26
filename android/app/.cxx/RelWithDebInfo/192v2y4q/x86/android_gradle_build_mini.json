@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/Users/masumecetin/Development/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/masumecetin/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/masumecetin/Documents/GitHub/StoreApp/android/app/.cxx/RelWithDebInfo/192v2y4q/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/masumecetin/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/masumecetin/Documents/GitHub/StoreApp/android/app/.cxx/RelWithDebInfo/192v2y4q/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

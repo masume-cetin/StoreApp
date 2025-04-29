@@ -46,6 +46,7 @@ dependencies:
   firebase_auth: ^5.5.2
   google_sign_in: ^6.3.0
   flutter_dotenv: ^5.2.1
+  firebase_storage: ^12.4.5
 
 
 dev_dependencies:
@@ -79,6 +80,7 @@ flutter:
     - assets/icons/
     - lib/l10n/app_en.arb
     - lib/l10n/app_tr.arb
+    - assets/.env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

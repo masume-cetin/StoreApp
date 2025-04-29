@@ -23,7 +23,6 @@ class ApiService {
       {String method = 'GET', Map<String, dynamic>? body,Map<String, dynamic>? queryParams,}) async {
     final url = Uri.parse('$uri$endpoint').replace(queryParameters: queryParams);
     http.Response response;
-
     try {
       if (method == 'POST') {
         response = await http.post(

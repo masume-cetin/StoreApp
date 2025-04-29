@@ -39,7 +39,6 @@ class _GradientSplashScreenState extends BaseState<GradientSplashScreen> with Si
   @override
   void initState() {
     super.initState();
-
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1000),

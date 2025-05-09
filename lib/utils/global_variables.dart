@@ -5,3 +5,4 @@ String signUp = "/api/signup";
 String signIn = "/api/signin";
 String getResourcesApi = "/api/resources/get";
 String getResourceByNameApi = "/api/resources/getByName";
+String getCategories = "/api/categories";

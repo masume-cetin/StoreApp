@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:generic_services_package/cubits/navigation_bar_cubit.dart';
 import 'package:store_app/screens/widgets/page_wrapper_widget.dart';
-
-import '../../cubits/navigation_bar_cubit.dart';
 import '../tab_screens/account_page.dart';
 import '../tab_screens/cart_page.dart';
 import '../tab_screens/favorites_page.dart';

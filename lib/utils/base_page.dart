@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-
-import '../models/generic/result_model.dart';
+import 'package:generic_services_package/models/generic/result_model.dart';
 
 abstract class BasePage extends StatefulWidget {
   const BasePage({super.key});
@@ -54,17 +53,17 @@ abstract class BaseState<T extends BasePage> extends State<T> {
     );
   }
 
-  bool handleResponse(Result? response) {
+  bool handleResponse(Result response) {
       final result = response;
-      if (result?.validation != null) {
-        showErrorSnackBar(context, result?.validation?.message);
-      } else if(result?.errorMessage != null ) {
+      if (result.validation != null) {
+        showErrorSnackBar(context, result.validation?.message);
+      } else if(result.errorMessage != null ) {
         showErrorSnackBar(
             context,
-             result?.errorMessage
+             result.errorMessage
                 );
       }
-     return result?.isSuccess ?? false;
+     return result.isSuccess;
   }
 
   showErrorSnackBar(BuildContext context, String? msg) {

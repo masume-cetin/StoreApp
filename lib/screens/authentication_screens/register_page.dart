@@ -8,12 +8,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:store_app/models/authModels/user_model.dart';
 import 'package:store_app/utils/theme.dart';
-import '../../controllers/api_service.dart';
-import '../../cubits/generic_cubit.dart';
-import '../../cubits/states/generic_states.dart';
+import 'package:generic_services_package/generic_services_package.dart';
 import '../../generated/app_localizations.dart';
-import '../../models/generic/api_response_wrapper.dart';
-import '../../models/generic/result_model.dart';
 import '../../providers/resource_bundle_provider.dart';
 import '../../utils/base_page.dart';
 import '../../utils/global_variables.dart';
@@ -61,7 +57,7 @@ class _RegisterState extends BaseState<Register> {
       fullName: _fullNameController.text,
     ).toJson();
 
-    final response = await service.sendRequest(signUp, method: 'POST', body: requestBody);
+    final response = await service.sendRequest(uri,signUp, method: 'POST', body: requestBody);
     debugPrint("📦 Raw signup response: $response");
 
     try {
@@ -110,6 +106,7 @@ class _RegisterState extends BaseState<Register> {
 
       if (idToken != null) {
         final response = await service.sendRequest(
+          uri,
           "/api/google-auth",
           method: 'POST',
           body: {

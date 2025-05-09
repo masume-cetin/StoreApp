@@ -2,11 +2,10 @@ import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import '../../controllers/api_service.dart';
-import '../../cubits/search_bar_cubit.dart';
-import '../../models/generic/api_list_response_wrapper.dart';
+import 'package:generic_services_package/generic_services_package.dart';
 import '../../providers/resource_bundle_provider.dart';
 import '../../models/categoryModels/category_model.dart';
+import '../../utils/global_variables.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -27,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<ApiListResponseWrapper<Category>> fetchAllCategories() async {
-    final response = await ApiService().sendRequest('/api/categories', method: 'GET');
+    final response = await ApiService().sendRequest(uri,'/api/categories', method: 'GET');
 
     return ApiListResponseWrapper<Category>.fromJson(
       response,

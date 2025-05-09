@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../controllers/api_service.dart';
-import '../models/generic/api_response_wrapper.dart';
+import 'package:generic_services_package/generic_services_package.dart';
 import '../models/resourceModels/resource_item_model.dart';
 import '../utils/global_variables.dart';
 
@@ -12,7 +11,7 @@ class ResourceBundleProvider with ChangeNotifier {
 
   Future<void> loadAllResources() async {
     try {
-      final response = await service.sendRequest(getResourcesApi, method: 'GET');
+      final response = await service.sendRequest(uri,getResourcesApi, method: 'GET');
       final apiResponse = ApiResponse<List<ResourceItem>>.fromJson(
         response,
             (data) {

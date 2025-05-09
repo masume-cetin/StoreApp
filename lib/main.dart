@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:store_app/providers/category_provider.dart';
 import 'package:store_app/screens/splash.dart';
 import 'package:store_app/utils/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart'; // auto-generated
-import 'cubits/generic_cubit.dart';
-import 'cubits/navigation_bar_cubit.dart';
-import 'cubits/search_bar_cubit.dart';
+import 'package:generic_services_package/generic_services_package.dart';
 import 'generated/app_localizations.dart';
 import 'models/authModels/user_model.dart';
-import 'models/generic/api_response_wrapper.dart';
+import 'models/categoryModels/category_model.dart';
 import 'models/resourceModels/resource_item_model.dart';
 import 'providers/resource_bundle_provider.dart'; // You'll need to create this file if not yet
 
@@ -22,15 +21,20 @@ void main() async {
   );
   await dotenv.load(fileName: "assets/.env");
   final resourceProvider = ResourceBundleProvider();
+  final categoryProvider = CategoryProvider();
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => resourceProvider),
+        ChangeNotifierProvider(create: (_) => categoryProvider),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider<ApiCubit<ApiResponse<ResourceItem>>>(
             create: (_) => ApiCubit<ApiResponse<ResourceItem>>(),
+          ),
+          BlocProvider<ApiCubit<ApiListResponseWrapper<Category>>>(
+            create: (_) => ApiCubit<ApiListResponseWrapper<Category>>(),
           ),
           BlocProvider<ApiCubit<ApiResponse<List<ResourceItem>>>>(
             create: (_) => ApiCubit<ApiResponse<List<ResourceItem>>>(),

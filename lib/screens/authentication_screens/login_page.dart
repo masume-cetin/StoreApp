@@ -7,16 +7,12 @@ import 'package:store_app/screens/widgets/page_wrapper_widget.dart';
 import 'package:store_app/utils/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 import 'package:google_sign_in/google_sign_in.dart';
-import '../../controllers/api_service.dart';
-import '../../cubits/generic_cubit.dart';
-import '../../cubits/states/generic_states.dart';
 import '../../generated/app_localizations.dart';
 import '../../models/authModels/user_model.dart';
-import '../../models/generic/api_response_wrapper.dart';
-import '../../models/generic/result_model.dart';
 import '../../providers/resource_bundle_provider.dart';
 import '../../utils/base_page.dart';
 import '../../utils/global_variables.dart';
+import 'package:generic_services_package/generic_services_package.dart';
 import '../../utils/validations.dart';
 import '../tab_screens/tab_nav_shell_page.dart';
 import '../widgets/gradient_button.dart';
@@ -59,7 +55,7 @@ class _LoginState extends BaseState<Login> {
       password: _passwordController.text,
     ).toJson();
 
-    final response = await service.sendRequest(signIn, method: 'POST', body: requestBody);
+    final response = await service.sendRequest(uri,signIn, method: 'POST', body: requestBody);
 
     debugPrint("📦 Raw login response: $response");
 
@@ -109,7 +105,7 @@ class _LoginState extends BaseState<Login> {
       final idToken = await userCred.user?.getIdToken();
 
       if (idToken != null) {
-        final response = await service.sendRequest(
+        final response = await service.sendRequest(uri,
           "/api/google-auth",
           method: 'POST',
           body: {

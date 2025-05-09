@@ -1,4 +1,5 @@
-import '../generic/money_model.dart';
+import 'package:generic_services_package/models/generic/money_model.dart';
+
 
 class Product {
   final String id;

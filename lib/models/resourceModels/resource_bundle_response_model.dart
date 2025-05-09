@@ -1,6 +1,6 @@
+import 'package:generic_services_package/models/generic/result_model.dart';
 import 'package:store_app/models/resourceModels/resource_bundle_model.dart';
 
-import '../generic/result_model.dart';
 
 class ResourceBundleResponse {
   final List<ResourceBundle> data;
